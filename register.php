@@ -39,12 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
+<?php include './includes/_head.php'; ?>
 <body>
     <div class="form-container">
         <h2>Inscription</h2>

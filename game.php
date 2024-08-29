@@ -8,6 +8,11 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+// Exemple de création de cartes avec leurs images spécifiques
+$card1 = new Card(1, './assets/pictures/cards/card1.png');
+$card2 = new Card(2, './assets/pictures/cards/card2.png');
+// Et ainsi de suite pour toutes les cartes...
+
 // Désérialiser l'objet User depuis la session
 $user = unserialize($_SESSION['user']);
 
@@ -25,25 +30,26 @@ $game = new Structure($pairs_count);
 
 // Obtenir les cartes pour affichage
 $cards = $game->getCards();
+// Exemple d'affichage des cartes
+$cards = [$card1, $card2]; // Liste des cartes à afficher
+
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu de Memory</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
+<?php include './includes/_head.php'; ?>
 <body>
     <div class="container">
         <h1>Jeu de Memory</h1>
         <div class="card-container">
-            <?php foreach ($cards as $card): ?>
-                <div class="card" style="background-image: url('./assets/pictures/cards/<?php echo htmlspecialchars($card->getImage()); ?>');">
-                    <!-- Vous pouvez ajouter du contenu supplémentaire ici si nécessaire -->
-                </div>
-            <?php endforeach; ?>
+            <?php
+            foreach ($cards as $card) {
+                // Utilisation d'un élément <img> pour chaque carte
+                echo '<div class="card" style="width: 10vw; height: 15vw;">';
+                echo '<img src="./assets/pictures/cards/recto.png" data-card-id="' . $card->getId() . '" alt="Card" class="card-front" style="width: 100%; height: 100%;">';
+                echo '</div>';
+            }
+            ?>
         </div>
     </div>
 </body>
