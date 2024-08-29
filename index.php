@@ -1,71 +1,70 @@
-<?php
-require_once 'classes/game.php';
-require_once 'classes/leaderboard.php';
-require_once 'classes/player.php';
-require_once 'classes/card.php';
-require_once 'db.php';
-session_start();
+    <?php
+    session_start();
+    require './autoload.php';
 
+    // Initialiser les variables de message
+    $error = '';
+    $success = '';
 
-
-
-// Si l'utilisateur est déjà connecté, redirigez-le vers la page du jeu
-if (isset($_SESSION['user_id'])) {
-    header('Location: game.php');
-    exit;
-}
-
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Vérifiez si l'utilisateur existe dans la base de données
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ?');
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
-
-    // Vérifiez le mot de passe
-    if ($user && password_verify($password, $user['password'])) {
-        // Stocker l'ID de l'utilisateur dans la session
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-
-        // Rediriger vers la page du jeu
-        header('Location: game.php');
-        exit;
-    } else {
-        $error = "Nom d'utilisateur ou mot de passe incorrect.";
+    // Connexion à la base de données (ajoute cette ligne si elle manque)
+    try {
+        $conn = new PDO('mysql:host=localhost;dbname=memory', 'root', ''); // Adapté à tes paramètres de connexion
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die('Connexion échouée : ' . $e->getMessage());
     }
-}
-?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Memory Game</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-<body>
-    <div class="container">
-        <h2>Connexion</h2>
+    // Vérifier si le formulaire a été soumis
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Récupérer les données du formulaire avec une valeur par défaut si la clé n'existe pas
+$login = isset($_POST['login']) ? trim($_POST['login']) : '';
+$password = isset($_POST['password']) ? trim($_POST['password']) : '';
 
-        <?php if ($error): ?>
-            <div class="error"><?php echo $error; ?></div>
-        <?php endif; ?>
 
-        <form method="POST">
-            <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-            <input type="password" name="password" placeholder="Mot de passe" required>
-            <button type="submit">Se connecter</button>
-        </form>
+        // Créer une instance de la classe User
+        $user = new User();
 
-        <div class="register">
-            Vous n'êtes pas déjà inscrit ? <a href="./register.php">S'inscrire ici</a>
+        // Tenter de se connecter
+        $result = $user->connect($conn, $login, $password);
+
+        if ($result === true) {
+            // Connexion réussie, rediriger vers une autre page
+            $_SESSION['user'] = serialize($user); // Sérialiser l'objet User
+            header('Location: home.php');
+            exit();
+        } else {
+            // Connexion échouée, afficher un message d'erreur
+            $error = 'Nom d\'utilisateur ou mot de passe incorrect.';
+        }
+    }
+    ?>
+
+
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Connexion</title>
+        <link rel="stylesheet" href="./assets/css/style.css">
+    </head>
+    <body>
+        <div class="form-container">
+            <h2>Connexion</h2>
+            <?php if ($error): ?>
+                <div class="error"><?php echo htmlspecialchars($error); ?></div>
+            <?php endif; ?>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="login">Nom d'utilisateur</label>
+                    <input type="text" id="login" name="login" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Se connecter</button>
+            </form>
         </div>
-    </div>
-</body>
-</html>
+    </body>
+    </html>

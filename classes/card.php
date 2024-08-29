@@ -1,12 +1,15 @@
 <?php
-
 class Card {
-    public $id;
-    public $image;
-
-    public function __construct($id, $image) {
+    private $id;
+    private $imagePath;
+    
+    public function __construct($id, $imagePath) {
         $this->id = $id;
-        $this->image = $image;
+        $this->imagePath = $imagePath;
+    }
+    
+    public function getImage() {
+        return $this->imagePath;
     }
 }
 ?>
