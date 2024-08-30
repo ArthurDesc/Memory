@@ -4,12 +4,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 110vh;
+            width: 100%;
+            background-image: url(../pictures/bg.jpg);
+            background-position: cover;
         }
 
+        h1 {
+            margin: 2vw;
+            color: white;
+        }
 
         h2 {
             margin-bottom: 20px;
+        }
+
+        a {
+            color: white;
         }
 
         input[type="text"],
@@ -53,4 +64,22 @@
 
         .register a:hover {
             text-decoration: underline;
+        }
+
+        /* GAME PAGE */
+        
+        
+        
+        .recto img, .verso img {
+            width: 11vw;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .card-container {
+            display: flex;
+            margin: 2vw;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2vw;
         }
