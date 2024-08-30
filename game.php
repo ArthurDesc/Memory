@@ -27,6 +27,7 @@ $pairs_count = isset($_SESSION['pairs_count']) ? intval($_SESSION['pairs_count']
 <?php include './includes/_head.php'; ?>
 <body>
     <a href="home.php" class="logo">Accueil</a>
+    <button onclick="location.reload();">Relancer la partie</button>
     <div class="container">
         <h1>Jeu de Memory</h1>
         <div class="card-container" id="card-container"></div>

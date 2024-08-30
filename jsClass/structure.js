@@ -72,13 +72,13 @@ class Structure {
     }
 
     handleFlippedCards(index) {
-        this.flippedIndices.push(index);
+        this.flippedIndices.push(index); // Ajouter l'index de la carte retournée à la liste
     
-        if (this.flippedIndices.length === 2) {
-            const [firstIndex, secondIndex] = this.flippedIndices;
+        if (this.flippedIndices.length === 2) { // Vérifier s'il y a deux cartes retournées
+            const [firstIndex, secondIndex] = this.flippedIndices; // Récupérer les deux indices
     
             // Si les cartes correspondent
-            if (this.cards[firstIndex].getId() === this.cards[secondIndex].getId()) {
+            if (this.cards[firstIndex].getImage() === this.cards[secondIndex].getImage()) {
                 // Désactiver les clics sur les cartes correspondantes
                 this.cardElements[firstIndex].style.pointerEvents = 'none';
                 this.cardElements[secondIndex].style.pointerEvents = 'none';
@@ -106,6 +106,7 @@ class Structure {
             }
         }
     }
+    
     
 
     // Méthode pour obtenir les cartes (pour affichage ou autre logique)

@@ -1,7 +1,6 @@
        body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            display: flex;
             justify-content: center;
             align-items: center;
             height: 110vh;
@@ -76,10 +75,15 @@
             border-radius: 10px;
         }
 
+        .recto {
+            cursor: pointer;
+        }
+
         .card-container {
             display: flex;
             margin: 2vw;
             justify-content: center;
             flex-wrap: wrap;
             gap: 2vw;
+            margin: 2vw 9vw;
         }
