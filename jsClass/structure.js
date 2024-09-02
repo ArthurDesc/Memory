@@ -49,7 +49,7 @@ class Structure {
             cardContainer.appendChild(cardElement);
             this.cardElements.push(cardElement);
         });
-        
+
         // Afficher le nombre d'essais
         this.updateAttemptsDisplay();
     }
@@ -75,6 +75,14 @@ class Structure {
         this.handleFlippedCards(index);
     }
 
+    checkGameEnd() {
+        const allCardsMatched = this.cards.every(card => card.isFaceUp);
+        if (allCardsMatched) {
+            console.log('Partie terminée !');
+            this.saveAttemptsToDatabase();
+        }
+    }
+
     handleFlippedCards(index) {
         this.flippedIndices.push(index); // Ajouter l'index de la carte retournée à la liste
     
@@ -82,7 +90,6 @@ class Structure {
             // Incrémenter le nombre d'essais
             this.attempts++;
             this.updateAttemptsDisplay();
-            
             const [firstIndex, secondIndex] = this.flippedIndices; // Récupérer les deux indices
     
             // Si les cartes correspondent
@@ -93,6 +100,8 @@ class Structure {
     
                 // Réinitialiser la liste des indices des cartes retournées
                 this.flippedIndices = [];
+                this.checkGameEnd();
+
             } else {
                 // Si les cartes ne correspondent pas, les retourner après un délai
                 setTimeout(() => {
@@ -113,22 +122,30 @@ class Structure {
                 }, 1000); // Délai de 1 seconde
             }
             
-            // Enregistrer le nombre d'essais dans la base de données
-            this.saveAttemptsToDatabase();
         }
     }
 
     saveAttemptsToDatabase() {
-        fetch('save_attempts.php', {
+        
+        console.log('Tentative de sauvegarde du score...', this.attempts);
+        fetch('../saveAttempts.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ attempts: this.attempts })
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Réponse reçue', response);
+            return response.json();
+        })
         .then(data => {
-            console.log('Nombre d\'essais enregistré avec succès:', data);
+            console.log('Données reçues:', data);
+            if (data.status === 'success') {
+                console.log('Nombre d\'essais enregistré avec succès:', data);
+            } else {
+                console.error('Erreur lors de l\'enregistrement des essais:', data.message);
+            }
         })
         .catch(error => {
             console.error('Erreur lors de l\'enregistrement des essais:', error);
@@ -141,7 +158,7 @@ class Structure {
             attemptsElement.textContent = `Nombre d'essais : ${this.attempts}`;
         }
     }
-    
+
     // Méthode pour obtenir les cartes (pour affichage ou autre logique)
     getCards() {
         return this.cards;
