@@ -77,6 +77,11 @@
 
         .recto {
             cursor: pointer;
+            transition: ease 0.3s;
+        }
+
+        .recto:hover {
+            transform: scale(1.07);
         }
 
         .card-container {
@@ -86,4 +91,8 @@
             flex-wrap: wrap;
             gap: 2vw;
             margin: 2vw 9vw;
+        }
+
+        .attempts-display {
+            color: white;
         }

@@ -61,6 +61,7 @@ $password = isset($_POST['password']) ? trim($_POST['password']) : '';
                 </div>
                 <button type="submit">Se connecter</button>
             </form>
+            Vous n'avez pas de compte ? <a href="register.php">Inscription</a>
         </div>
     </body>
     </html>

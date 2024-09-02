@@ -6,6 +6,7 @@ class Structure {
         this.cards = [];
         this.cardElements = [];
         this.flippedIndices = [];
+        this.attempts = 0; // Nouvelle propriété pour suivre le nombre d'essais
         this.init();
     }
 
@@ -48,6 +49,9 @@ class Structure {
             cardContainer.appendChild(cardElement);
             this.cardElements.push(cardElement);
         });
+        
+        // Afficher le nombre d'essais
+        this.updateAttemptsDisplay();
     }
 
     flipCard(index) {
@@ -75,6 +79,10 @@ class Structure {
         this.flippedIndices.push(index); // Ajouter l'index de la carte retournée à la liste
     
         if (this.flippedIndices.length === 2) { // Vérifier s'il y a deux cartes retournées
+            // Incrémenter le nombre d'essais
+            this.attempts++;
+            this.updateAttemptsDisplay();
+            
             const [firstIndex, secondIndex] = this.flippedIndices; // Récupérer les deux indices
     
             // Si les cartes correspondent
@@ -104,11 +112,36 @@ class Structure {
                     this.flippedIndices = [];
                 }, 1000); // Délai de 1 seconde
             }
+            
+            // Enregistrer le nombre d'essais dans la base de données
+            this.saveAttemptsToDatabase();
+        }
+    }
+
+    saveAttemptsToDatabase() {
+        fetch('save_attempts.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ attempts: this.attempts })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Nombre d\'essais enregistré avec succès:', data);
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'enregistrement des essais:', error);
+        });
+    }
+    
+    updateAttemptsDisplay() {
+        const attemptsElement = document.getElementById('attempts-display');
+        if (attemptsElement) {
+            attemptsElement.textContent = `Nombre d'essais : ${this.attempts}`;
         }
     }
     
-    
-
     // Méthode pour obtenir les cartes (pour affichage ou autre logique)
     getCards() {
         return this.cards;
