@@ -32,11 +32,8 @@ $data = json_decode($rawData, true);
 $attempts = isset($data['attempts']) ? intval($data['attempts']) : 0;
 file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Decoded attempts: " . $attempts . "\n", FILE_APPEND);
 
-// Connexion à la base de données via la classe Database
-<?php
-// ... (le reste du code reste inchangé)
-
 try {
+    // Connexion à la base de données via la classe Database
     $db = new Database();
     $pdo = $db->getConnection();
 
@@ -52,9 +49,22 @@ try {
         throw new Exception("User ID does not exist in the database");
     }
 
-    // Le reste du code pour insérer/mettre à jour le score
+    // Vérifier s'il existe déjà un enregistrement pour l'utilisateur
+    $stmt = $pdo->prepare("SELECT id FROM games WHERE user_id = :user_id ORDER BY played_at DESC LIMIT 1");
+    $stmt->execute(['user_id' => $userId]);
+    $game = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Après l'insertion/mise à jour, vérifiez si l'opération a réussi
+    if ($game) {
+        // Mettre à jour le nombre d'essais
+        $stmt = $pdo->prepare("UPDATE games SET moves = :moves WHERE id = :id");
+        $stmt->execute(['moves' => $attempts, 'id' => $game['id']]);
+    } else {
+        // Créer un nouvel enregistrement si aucun n'existe
+        $stmt = $pdo->prepare("INSERT INTO games (user_id, moves) VALUES (:user_id, :moves)");
+        $stmt->execute(['user_id' => $userId, 'moves' => $attempts]);
+    }
+
+    // Vérifier si l'opération d'insertion/mise à jour a réussi
     $affectedRows = $stmt->rowCount();
     if ($affectedRows == 0) {
         throw new Exception("No rows were affected by the insert/update operation");
@@ -69,6 +79,7 @@ try {
     echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
 }
 
-
 file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Script ended\n", FILE_APPEND);
+file_put_contents(__DIR__ . '/logs/debug_save_attempts.log', date('Y-m-d H:i:s') . " - Script started\n", FILE_APPEND);
+
 ?>

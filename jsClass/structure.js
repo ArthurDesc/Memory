@@ -76,6 +76,7 @@ class Structure {
     }
 
     checkGameEnd() {
+        console.log('Vérification de fin de partie...');
         const allCardsMatched = this.cards.every(card => card.isFaceUp);
         if (allCardsMatched) {
             console.log('Partie terminée !');
@@ -91,9 +92,10 @@ class Structure {
             this.attempts++;
             this.updateAttemptsDisplay();
             const [firstIndex, secondIndex] = this.flippedIndices; // Récupérer les deux indices
-    
+            
             // Si les cartes correspondent
             if (this.cards[firstIndex].getImage() === this.cards[secondIndex].getImage()) {
+                console.log('Paire trouvée !');
                 // Désactiver les clics sur les cartes correspondantes
                 this.cardElements[firstIndex].style.pointerEvents = 'none';
                 this.cardElements[secondIndex].style.pointerEvents = 'none';
@@ -128,7 +130,7 @@ class Structure {
     saveAttemptsToDatabase() {
         
         console.log('Tentative de sauvegarde du score...', this.attempts);
-        fetch('../saveAttempts.php', {
+        fetch('/memory/saveAttempts.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

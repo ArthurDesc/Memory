@@ -1,0 +1,36 @@
+2024-09-02 14:10:58 - Script started
+2024-09-02 14:10:58 - Raw data received: {"attempts":4}
+2024-09-02 14:10:58 - Decoded attempts: 4
+2024-09-02 14:10:58 - User ID: 3
+2024-09-02 14:10:58 - Attempts saved: 4, Affected rows: 1
+2024-09-02 14:10:58 - Script ended
+2024-09-02 14:11:29 - Script started
+2024-09-02 14:11:29 - Raw data received: {"attempts":3}
+2024-09-02 14:11:29 - Decoded attempts: 3
+2024-09-02 14:11:29 - User ID: 3
+2024-09-02 14:11:29 - Attempts saved: 3, Affected rows: 1
+2024-09-02 14:11:29 - Script ended
+2024-09-02 14:11:58 - Script started
+2024-09-02 14:11:58 - Raw data received: {"attempts":5}
+2024-09-02 14:11:58 - Decoded attempts: 5
+2024-09-02 14:11:58 - User ID: 3
+2024-09-02 14:11:58 - Attempts saved: 5, Affected rows: 1
+2024-09-02 14:11:58 - Script ended
+2024-09-02 14:12:36 - Script started
+2024-09-02 14:12:36 - Raw data received: {"attempts":3}
+2024-09-02 14:12:36 - Decoded attempts: 3
+2024-09-02 14:12:36 - User ID: 2
+2024-09-02 14:12:36 - Attempts saved: 3, Affected rows: 1
+2024-09-02 14:12:36 - Script ended
+2024-09-02 14:12:49 - Script started
+2024-09-02 14:12:49 - Raw data received: {"attempts":5}
+2024-09-02 14:12:49 - Decoded attempts: 5
+2024-09-02 14:12:49 - User ID: 2
+2024-09-02 14:12:49 - Attempts saved: 5, Affected rows: 1
+2024-09-02 14:12:49 - Script ended
+2024-09-02 14:21:27 - Script started
+2024-09-02 14:21:27 - Raw data received: {"attempts":3}
+2024-09-02 14:21:27 - Decoded attempts: 3
+2024-09-02 14:21:27 - User ID: 2
+2024-09-02 14:21:27 - Attempts saved: 3, Affected rows: 1
+2024-09-02 14:21:27 - Script ended
