@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'autoload.php';
+require 'autoload.php'; // Inclut Database.php et autres fichiers nécessaires
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
@@ -36,14 +36,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 }
+
+try {
+    // Utiliser la classe Database existante pour obtenir la connexion PDO
+    $db = new Database();
+    $pdo = $db->getConnection();
+
+    // Requête pour récupérer le classement des joueurs
+    $stmt = $pdo->prepare("
+        SELECT 
+            u.username AS pseudo, 
+            ROUND(AVG(g.moves), 2) AS average_score
+        FROM 
+            users u
+        JOIN 
+            games g ON u.id = g.user_id
+        GROUP BY 
+            u.id, u.username
+        ORDER BY 
+            average_score ASC
+    ");
+    $stmt->execute();
+    $leaderboard = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (Exception $e) {
+    $error = "Erreur lors de la récupération du classement : " . $e->getMessage();
+}
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="fr">
 <?php include './includes/_head.php'; ?>
 
 <body>
-    <div class="container">
+    <main>
         <h1>Bienvenue, <?php echo htmlspecialchars($user->getUsername()); ?> !</h1>
         <p>Choisissez le nombre de paires de cartes pour commencer le Memory :</p>
         <?php if ($error): ?>
@@ -70,6 +98,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="index.php" method="POST">
             <button type="submit">Déconnexion</button>
         </form>
-    </div>
+
+        <div id="leaderboard-container">
+    <p>Classement des joueurs : </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>KD RATIO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (isset($leaderboard) && count($leaderboard) > 0): ?>
+                <?php foreach ($leaderboard as $player): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($player['pseudo']); ?></td>
+                        <td><?php echo htmlspecialchars($player['average_score']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="2">Aucun joueur trouvé dans le classement.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+    <main>
+    <script src="./jsClass/leaderboard.js"></script> <!-- Assure-toi que le chemin est correct -->
+
 </body>
 </html>

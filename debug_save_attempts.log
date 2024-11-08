@@ -34,3 +34,105 @@
 2024-09-02 14:21:27 - User ID: 2
 2024-09-02 14:21:27 - Attempts saved: 3, Affected rows: 1
 2024-09-02 14:21:27 - Script ended
+2024-09-03 06:59:06 - Script started
+2024-09-03 06:59:06 - Raw data received: {"attempts":4}
+2024-09-03 06:59:06 - Decoded attempts: 4
+2024-09-03 06:59:06 - User ID: 2
+2024-09-03 06:59:06 - Attempts saved: 4, Affected rows: 1
+2024-09-03 06:59:06 - Script ended
+2024-09-03 07:00:16 - Script started
+2024-09-03 07:00:16 - Raw data received: {"attempts":4}
+2024-09-03 07:00:16 - Decoded attempts: 4
+2024-09-03 07:00:16 - User ID: 2
+2024-09-03 07:00:16 - Error: No rows were affected by the insert/update operation
+2024-09-03 07:00:16 - Script ended
+2024-09-03 07:00:28 - Script started
+2024-09-03 07:00:28 - Raw data received: {"attempts":4}
+2024-09-03 07:00:28 - Decoded attempts: 4
+2024-09-03 07:00:28 - User ID: 2
+2024-09-03 07:00:28 - Error: No rows were affected by the insert/update operation
+2024-09-03 07:00:28 - Script ended
+2024-09-03 07:00:43 - Script started
+2024-09-03 07:00:43 - Raw data received: {"attempts":4}
+2024-09-03 07:00:43 - Decoded attempts: 4
+2024-09-03 07:00:43 - User ID: 2
+2024-09-03 07:00:43 - Error: No rows were affected by the insert/update operation
+2024-09-03 07:00:43 - Script ended
+2024-09-03 07:00:57 - Script started
+2024-09-03 07:00:57 - Raw data received: {"attempts":4}
+2024-09-03 07:00:57 - Decoded attempts: 4
+2024-09-03 07:00:57 - User ID: 2
+2024-09-03 07:00:57 - Error: No rows were affected by the insert/update operation
+2024-09-03 07:00:57 - Script ended
+2024-09-03 07:01:05 - Script started
+2024-09-03 07:01:05 - Raw data received: {"attempts":4}
+2024-09-03 07:01:05 - Decoded attempts: 4
+2024-09-03 07:01:05 - User ID: 2
+2024-09-03 07:01:05 - Error: No rows were affected by the insert/update operation
+2024-09-03 07:01:05 - Script ended
+2024-09-03 07:01:21 - Script started
+2024-09-03 07:01:21 - Raw data received: {"attempts":4}
+2024-09-03 07:01:21 - Decoded attempts: 4
+2024-09-03 07:01:21 - User ID: 2
+2024-09-03 07:01:21 - Error: No rows were affected by the insert/update operation
+2024-09-03 07:01:21 - Script ended
+2024-09-03 07:01:26 - Script started
+2024-09-03 07:01:26 - Raw data received: {"attempts":3}
+2024-09-03 07:01:26 - Decoded attempts: 3
+2024-09-03 07:01:26 - User ID: 2
+2024-09-03 07:01:26 - Attempts saved: 3, Affected rows: 1
+2024-09-03 07:01:26 - Script ended
+2024-09-03 07:02:50 - Script started
+2024-09-03 07:02:50 - Raw data received: {"attempts":6}
+2024-09-03 07:02:50 - Decoded attempts: 6
+2024-09-03 07:02:50 - User ID: 2
+2024-09-03 07:02:50 - Attempts saved: 6, Affected rows: 1, Average moves: 6.0000
+2024-09-03 07:02:50 - Script ended
+2024-09-03 07:03:04 - Script started
+2024-09-03 07:03:04 - Raw data received: {"attempts":4}
+2024-09-03 07:03:04 - Decoded attempts: 4
+2024-09-03 07:03:04 - User ID: 2
+2024-09-03 07:03:04 - Attempts saved: 4, Affected rows: 1, Average moves: 4.0000
+2024-09-03 07:03:04 - Script ended
+2024-09-03 07:14:41 - Script started
+2024-09-03 07:14:41 - Raw data received: {"attempts":5}
+2024-09-03 07:14:41 - Decoded attempts: 5
+2024-09-03 07:14:41 - User ID: 2
+2024-09-03 07:14:41 - Attempts saved: 5, Affected rows: 1, Average moves: 5.0000
+2024-09-03 07:14:41 - Script ended
+2024-09-03 09:10:01 - Script started
+2024-09-03 09:10:01 - Raw data received: {"attempts":4}
+2024-09-03 09:10:01 - Decoded attempts: 4
+2024-09-03 09:10:01 - User ID: 3
+2024-09-03 09:10:01 - Attempts saved: 4, Affected rows: 1, Average moves: 4.0000
+2024-09-03 09:10:01 - Script ended
+2024-09-03 09:12:41 - Script started
+2024-09-03 09:12:41 - Raw data received: {"attempts":3}
+2024-09-03 09:12:41 - Decoded attempts: 3
+2024-09-03 09:12:41 - User ID: 3
+2024-09-03 09:12:41 - Attempts saved: 3, Affected rows: 1, Average moves: 3.0000
+2024-09-03 09:12:41 - Script ended
+2024-09-03 09:12:50 - Script started
+2024-09-03 09:12:50 - Raw data received: {"attempts":4}
+2024-09-03 09:12:50 - Decoded attempts: 4
+2024-09-03 09:12:50 - User ID: 3
+2024-09-03 09:12:50 - Attempts saved: 4, Affected rows: 1, Average moves: 4.0000
+2024-09-03 09:12:50 - Script ended
+2024-09-03 11:40:51 - Script started
+2024-09-03 11:40:51 - Raw data received: {"attempts":4}
+2024-09-03 11:40:51 - Decoded attempts: 4
+2024-09-03 11:40:51 - User ID: 4
+2024-09-03 11:40:51 - Attempts saved: 4, Affected rows: 1, Average moves: 4.0000
+2024-09-03 11:40:51 - Script ended
+2024-09-03 11:41:08 - Script started
+2024-09-03 11:41:08 - Raw data received: {"attempts":5}
+2024-09-03 11:41:08 - Decoded attempts: 5
+2024-09-03 11:41:08 - User ID: 4
+2024-09-03 11:41:08 - Attempts saved: 5, Affected rows: 1, Average moves: 5.0000
+2024-09-03 11:41:08 - Script ended
+2024-09-03 13:21:10 - Script started
+2024-09-03 13:21:10 - Raw data received: {"attempts":4}
+2024-09-03 13:21:10 - Decoded attempts: 4
+2024-09-03 13:21:10 - User ID: 3
+2024-09-03 13:21:10 - Error: No rows were affected by the insert/update operation
+2024-09-03 13:21:10 - Script ended

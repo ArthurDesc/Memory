@@ -70,8 +70,16 @@ try {
         throw new Exception("No rows were affected by the insert/update operation");
     }
 
-    file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Attempts saved: $attempts, Affected rows: $affectedRows\n", FILE_APPEND);
-    echo json_encode(['status' => 'success', 'message' => 'Attempts saved: ' . $attempts]);
+    // Calculer la moyenne des essais pour l'utilisateur
+    $stmt = $pdo->prepare("SELECT AVG(moves) AS average_moves FROM games WHERE user_id = :user_id");
+    $stmt->execute(['user_id' => $userId]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $averageMoves = $result['average_moves'];
+
+    file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Attempts saved: $attempts, Affected rows: $affectedRows, Average moves: $averageMoves\n", FILE_APPEND);
+    
+    // Renvoyer la réponse avec la moyenne des essais
+    echo json_encode(['status' => 'success', 'message' => 'Attempts saved: ' . $attempts, 'average_moves' => $averageMoves]);
 
 } catch (Exception $e) {
     file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Error: " . $e->getMessage() . "\n", FILE_APPEND);
@@ -80,6 +88,4 @@ try {
 }
 
 file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Script ended\n", FILE_APPEND);
-file_put_contents(__DIR__ . '/logs/debug_save_attempts.log', date('Y-m-d H:i:s') . " - Script started\n", FILE_APPEND);
-
 ?>

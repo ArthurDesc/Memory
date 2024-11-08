@@ -7,6 +7,7 @@
             width: 100%;
             background-image: url(../pictures/bg.jpg);
             background-position: cover;
+            z-index: -1;
         }
 
         h1 {
