@@ -45,16 +45,20 @@ try {
     // Requête pour récupérer le classement des joueurs
     $stmt = $pdo->prepare("
         SELECT 
-            u.username AS pseudo, 
-            ROUND(AVG(g.moves), 2) AS average_score
+            u.username AS pseudo,
+            COUNT(g.id) as parties_jouees,
+            ROUND(AVG(1000 / ((g.pairs_count * g.pairs_count) * g.moves)), 2) AS score_moyen
         FROM 
             users u
-        JOIN 
+        LEFT JOIN 
             games g ON u.id = g.user_id
         GROUP BY 
             u.id, u.username
+        HAVING 
+            parties_jouees > 0
         ORDER BY 
-            average_score ASC
+            score_moyen DESC  -- DESC car maintenant un score plus haut est meilleur
+        LIMIT 10
     ");
     $stmt->execute();
     $leaderboard = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -103,34 +107,26 @@ try {
             <table>
                 <thead>
                     <tr>
+                        <th>Rang</th>
                         <th>Joueur</th>
                         <th>Score moyen</th>
+                        <th>Parties jouées</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (isset($leaderboard) && count($leaderboard) > 0): ?>
-                        <?php foreach ($leaderboard as $player): ?>
-                            <tr>
-                                <td>
-                                    <span class="player-name">
-                                        <?php echo htmlspecialchars($player['pseudo']); ?>
-                                    </span>
-                                </td>
-                                <td><?php echo htmlspecialchars($player['average_score']); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
+                    <?php foreach ($leaderboard as $index => $player): ?>
                         <tr>
-                            <td colspan="2">Aucun joueur dans le classement</td>
+                            <td><?php echo $index + 1; ?></td>
+                            <td><?php echo htmlspecialchars($player['pseudo']); ?></td>
+                            <td><?php echo $player['score_moyen']; ?></td>
+                            <td><?php echo $player['parties_jouees']; ?></td>
                         </tr>
-                    <?php endif; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
 
-        <main>
-            <script src="./jsClass/leaderboard.js"></script> <!-- Assure-toi que le chemin est correct -->
-
+    </main>
 </body>
 
 </html>
