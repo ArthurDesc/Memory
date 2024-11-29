@@ -11,8 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Créer une connexion PDO
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=memory;charset=utf8', 'root', ''); // Remplacez les valeurs par vos propres paramètres de connexion
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db = new Database();
+        $pdo = $db->getConnection();
 
         // Créer un nouvel utilisateur
         $user = new User($login, $password);

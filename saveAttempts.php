@@ -1,6 +1,6 @@
 <?php
-session_start();
-require 'autoload.php'; // Assurez-vous que ce fichier inclut Database.php et autres nécessaires
+require_once './includes/session.php';
+require 'autoload.php';
 
 // Log pour le débogage
 file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Script started\n", FILE_APPEND);
@@ -30,7 +30,8 @@ file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Raw data 
 
 $data = json_decode($rawData, true);
 $attempts = isset($data['attempts']) ? intval($data['attempts']) : 0;
-file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Decoded attempts: " . $attempts . "\n", FILE_APPEND);
+$pairsCount = isset($data['pairsCount']) ? intval($data['pairsCount']) : 3;
+file_put_contents('debug_save_attempts.log', date('Y-m-d H:i:s') . " - Decoded attempts: " . $attempts . ", pairsCount: " . $pairsCount . "\n", FILE_APPEND);
 
 try {
     // Connexion à la base de données via la classe Database
@@ -55,13 +56,29 @@ try {
     $game = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($game) {
-        // Mettre à jour le nombre d'essais
-        $stmt = $pdo->prepare("UPDATE games SET moves = :moves WHERE id = :id");
-        $stmt->execute(['moves' => $attempts, 'id' => $game['id']]);
+        // Mettre à jour le nombre d'essais et le nombre de paires
+        $sql = "UPDATE games SET moves = :moves, pairs_count = :pairs_count WHERE id = :id";
+        file_put_contents('debug_save_attempts.log', "UPDATE SQL: $sql\n", FILE_APPEND);
+        file_put_contents('debug_save_attempts.log', "Params: moves=$attempts, pairs_count=$pairsCount, id=" . $game['id'] . "\n", FILE_APPEND);
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            'moves' => $attempts, 
+            'pairs_count' => $pairsCount,
+            'id' => $game['id']
+        ]);
     } else {
-        // Créer un nouvel enregistrement si aucun n'existe
-        $stmt = $pdo->prepare("INSERT INTO games (user_id, moves) VALUES (:user_id, :moves)");
-        $stmt->execute(['user_id' => $userId, 'moves' => $attempts]);
+        // Créer un nouvel enregistrement avec le nombre de paires
+        $sql = "INSERT INTO games (user_id, moves, pairs_count) VALUES (:user_id, :moves, :pairs_count)";
+        file_put_contents('debug_save_attempts.log', "INSERT SQL: $sql\n", FILE_APPEND);
+        file_put_contents('debug_save_attempts.log', "Params: user_id=$userId, moves=$attempts, pairs_count=$pairsCount\n", FILE_APPEND);
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            'user_id' => $userId, 
+            'moves' => $attempts,
+            'pairs_count' => $pairsCount
+        ]);
     }
 
     // Vérifier si l'opération d'insertion/mise à jour a réussi

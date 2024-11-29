@@ -136,3 +136,59 @@
 2024-09-03 13:21:10 - User ID: 3
 2024-09-03 13:21:10 - Error: No rows were affected by the insert/update operation
 2024-09-03 13:21:10 - Script ended
+2024-11-29 10:21:19 - Script started
+2024-11-29 10:21:20 - Raw data received: {"attempts":3}
+2024-11-29 10:21:20 - Decoded attempts: 3
+2024-11-29 10:21:20 - User ID: 12
+2024-11-29 10:21:20 - Attempts saved: 3, Affected rows: 1, Average moves: 3.0000
+2024-11-29 10:21:20 - Script ended
+2024-11-29 10:34:56 - Script started
+2024-11-29 10:34:56 - Raw data received: {"attempts":4,"pairsCount":3}
+2024-11-29 10:34:56 - Decoded attempts: 4
+2024-11-29 10:34:56 - User ID: 12
+2024-11-29 10:34:56 - Attempts saved: 4, Affected rows: 1, Average moves: 4.0000
+2024-11-29 10:34:56 - Script ended
+2024-11-29 10:38:27 - Script started
+2024-11-29 10:38:27 - Raw data received: {"attempts":3,"pairsCount":3}
+2024-11-29 10:38:27 - Decoded attempts: 3, pairsCount: 3
+2024-11-29 10:38:27 - User ID: 12
+2024-11-29 10:38:27 - Attempts saved: 3, Affected rows: 1, Average moves: 3.0000
+2024-11-29 10:38:27 - Script ended
+2024-11-29 10:39:42 - Script started
+2024-11-29 10:39:42 - Raw data received: {"attempts":5,"pairsCount":3}
+2024-11-29 10:39:42 - Decoded attempts: 5, pairsCount: 3
+2024-11-29 10:39:42 - User ID: 12
+2024-11-29 10:39:42 - Attempts saved: 5, Affected rows: 1, Average moves: 5.0000
+2024-11-29 10:39:42 - Script ended
+2024-11-29 10:40:13 - Script started
+2024-11-29 10:40:13 - Raw data received: {"attempts":8,"pairsCount":4}
+2024-11-29 10:40:13 - Decoded attempts: 8, pairsCount: 4
+2024-11-29 10:40:13 - User ID: 12
+2024-11-29 10:40:13 - Attempts saved: 8, Affected rows: 1, Average moves: 8.0000
+2024-11-29 10:40:13 - Script ended
+2024-11-29 10:45:16 - Script started
+2024-11-29 10:45:16 - Raw data received: {"attempts":5,"pairsCount":3}
+2024-11-29 10:45:16 - Decoded attempts: 5, pairsCount: 3
+2024-11-29 10:45:16 - User ID: 12
+2024-11-29 10:45:16 - Attempts saved: 5, Affected rows: 1, Average moves: 5.0000
+2024-11-29 10:45:16 - Script ended
+2024-11-29 10:47:29 - Script started
+2024-11-29 10:47:29 - Raw data received: {"attempts":8,"pairsCount":4}
+2024-11-29 10:47:29 - Decoded attempts: 8, pairsCount: 4
+2024-11-29 10:47:29 - User ID: 12
+2024-11-29 10:47:29 - Attempts saved: 8, Affected rows: 1, Average moves: 8.0000
+2024-11-29 10:47:29 - Script ended
+2024-11-29 10:51:12 - Script started
+2024-11-29 10:51:12 - Raw data received: {"attempts":12,"pairsCount":4}
+2024-11-29 10:51:12 - Decoded attempts: 12, pairsCount: 4
+2024-11-29 10:51:12 - User ID: 12
+2024-11-29 10:51:12 - Attempts saved: 12, Affected rows: 1, Average moves: 12.0000
+2024-11-29 10:51:12 - Script ended
+2024-11-29 10:57:25 - Script started
+2024-11-29 10:57:25 - Raw data received: {"attempts":5,"pairsCount":3}
+2024-11-29 10:57:25 - Decoded attempts: 5, pairsCount: 3
+2024-11-29 10:57:25 - User ID: 13
+INSERT SQL: INSERT INTO games (user_id, moves, pairs_count) VALUES (:user_id, :moves, :pairs_count)
+Params: user_id=13, moves=5, pairs_count=3
+2024-11-29 10:57:25 - Attempts saved: 5, Affected rows: 1, Average moves: 5.0000
+2024-11-29 10:57:25 - Script ended

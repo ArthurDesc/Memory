@@ -1,6 +1,6 @@
 <?php
-session_start();
-require 'autoload.php'; // Inclut Database.php et autres fichiers nécessaires
+require_once './includes/session.php';
+require 'autoload.php';
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
@@ -58,7 +58,6 @@ try {
     ");
     $stmt->execute();
     $leaderboard = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 } catch (Exception $e) {
     $error = "Erreur lors de la récupération du classement : " . $e->getMessage();
 }
@@ -100,33 +99,38 @@ try {
         </form>
 
         <div id="leaderboard-container">
-    <p>Classement des joueurs : </p>
-    <table>
-        <thead>
-            <tr>
-                <th>Pseudo</th>
-                <th>KD RATIO</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (isset($leaderboard) && count($leaderboard) > 0): ?>
-                <?php foreach ($leaderboard as $player): ?>
+            <p>🏆 Classement des joueurs</p>
+            <table>
+                <thead>
                     <tr>
-                        <td><?php echo htmlspecialchars($player['pseudo']); ?></td>
-                        <td><?php echo htmlspecialchars($player['average_score']); ?></td>
+                        <th>Joueur</th>
+                        <th>Score moyen</th>
                     </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="2">Aucun joueur trouvé dans le classement.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+                </thead>
+                <tbody>
+                    <?php if (isset($leaderboard) && count($leaderboard) > 0): ?>
+                        <?php foreach ($leaderboard as $player): ?>
+                            <tr>
+                                <td>
+                                    <span class="player-name">
+                                        <?php echo htmlspecialchars($player['pseudo']); ?>
+                                    </span>
+                                </td>
+                                <td><?php echo htmlspecialchars($player['average_score']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="2">Aucun joueur dans le classement</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
 
-    <main>
-    <script src="./jsClass/leaderboard.js"></script> <!-- Assure-toi que le chemin est correct -->
+        <main>
+            <script src="./jsClass/leaderboard.js"></script> <!-- Assure-toi que le chemin est correct -->
 
 </body>
+
 </html>

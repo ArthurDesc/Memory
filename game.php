@@ -1,7 +1,6 @@
 <?php
-session_start();
-
-require 'autoload.php'; // Assure-toi que ce fichier inclut Database.php et autres nécessaires
+require_once './includes/session.php';
+require 'autoload.php';
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {

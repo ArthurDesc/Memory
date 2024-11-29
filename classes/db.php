@@ -5,9 +5,9 @@ class Database {
     private $pdo;
 
     public function __construct() {
-        $servername = "localhost";
+        $servername = "mysql";
         $username = "root";
-        $password = "";
+        $password = "root";
         $database = "memory";
 
         try {

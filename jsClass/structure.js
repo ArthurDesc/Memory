@@ -58,10 +58,10 @@ class Structure {
         const card = this.cards[index];
         card.flip();
         const cardElement = this.cardElements[index];
-        
+
         // Mettre à jour l'image de la carte
         cardElement.querySelector('img').src = card.getImage();
-        
+
         // Mettre à jour la classe CSS
         if (card.isFaceUp) {
             cardElement.classList.remove('recto');
@@ -76,7 +76,6 @@ class Structure {
     }
 
     checkGameEnd() {
-        console.log('Vérification de fin de partie...');
         const allCardsMatched = this.cards.every(card => card.isFaceUp);
         if (allCardsMatched) {
             console.log('Partie terminée !');
@@ -86,20 +85,20 @@ class Structure {
 
     handleFlippedCards(index) {
         this.flippedIndices.push(index); // Ajouter l'index de la carte retournée à la liste
-    
+
         if (this.flippedIndices.length === 2) { // Vérifier s'il y a deux cartes retournées
             // Incrémenter le nombre d'essais
             this.attempts++;
             this.updateAttemptsDisplay();
             const [firstIndex, secondIndex] = this.flippedIndices; // Récupérer les deux indices
-            
+
             // Si les cartes correspondent
             if (this.cards[firstIndex].getImage() === this.cards[secondIndex].getImage()) {
                 console.log('Paire trouvée !');
                 // Désactiver les clics sur les cartes correspondantes
                 this.cardElements[firstIndex].style.pointerEvents = 'none';
                 this.cardElements[secondIndex].style.pointerEvents = 'none';
-    
+
                 // Réinitialiser la liste des indices des cartes retournées
                 this.flippedIndices = [];
                 this.checkGameEnd();
@@ -109,51 +108,76 @@ class Structure {
                 setTimeout(() => {
                     this.cards[firstIndex].flip();
                     this.cards[secondIndex].flip();
-                    
+
                     // Réinitialiser les images et classes CSS
                     this.cardElements[firstIndex].querySelector('img').src = this.cards[firstIndex].getImage();
                     this.cardElements[secondIndex].querySelector('img').src = this.cards[secondIndex].getImage();
-                    
+
                     this.cardElements[firstIndex].classList.remove('verso');
                     this.cardElements[firstIndex].classList.add('recto');
                     this.cardElements[secondIndex].classList.remove('verso');
                     this.cardElements[secondIndex].classList.add('recto');
-                    
+
                     // Réinitialiser la liste des indices des cartes retournées
                     this.flippedIndices = [];
                 }, 1000); // Délai de 1 seconde
             }
-            
+
         }
     }
 
     saveAttemptsToDatabase() {
-        
-        console.log('Tentative de sauvegarde du score...', this.attempts);
+        // Log des données avant envoi
+        console.log('Début saveAttemptsToDatabase');
+        console.log('Données à envoyer:', {
+            attempts: this.attempts,
+            pairsCount: this.pairsCount
+        });
+
         fetch('/memory/saveAttempts.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ attempts: this.attempts })
+            body: JSON.stringify({ 
+                attempts: this.attempts,
+                pairsCount: this.pairsCount
+            })
         })
-        .then(response => {
-            console.log('Réponse reçue', response);
-            return response.json();
-        })
-        .then(data => {
-            console.log('Données reçues:', data);
-            if (data.status === 'success') {
-                console.log('Nombre d\'essais enregistré avec succès:', data);
-            } else {
-                console.error('Erreur lors de l\'enregistrement des essais:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Erreur lors de l\'enregistrement des essais:', error);
-        });
+            .then(response => {
+                // Log de la réponse brute
+                console.log('Réponse brute reçue:', response);
+                console.log('Status:', response.status);
+                console.log('Headers:', [...response.headers.entries()]);
+                
+                // Vérifier si la réponse est ok
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Log des données parsées
+                console.log('Données JSON reçues:', data);
+                if (data.status === 'success') {
+                    console.log('Succès:', data);
+                } else {
+                    console.error('Erreur côté serveur:', data.message);
+                }
+            })
+            .catch(error => {
+                // Log détaillé des erreurs
+                console.error('Erreur détaillée:', {
+                    message: error.message,
+                    error: error,
+                    stack: error.stack
+                });
+            })
+            .finally(() => {
+                console.log('Fin saveAttemptsToDatabase');
+            });
     }
-    
+
     updateAttemptsDisplay() {
         const attemptsElement = document.getElementById('attempts-display');
         if (attemptsElement) {
