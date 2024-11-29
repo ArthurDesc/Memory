@@ -78,7 +78,6 @@ class Structure {
     checkGameEnd() {
         const allCardsMatched = this.cards.every(card => card.isFaceUp);
         if (allCardsMatched) {
-            console.log('Partie terminée !');
             this.saveAttemptsToDatabase();
         }
     }
@@ -94,7 +93,6 @@ class Structure {
 
             // Si les cartes correspondent
             if (this.cards[firstIndex].getImage() === this.cards[secondIndex].getImage()) {
-                console.log('Paire trouvée !');
                 // Désactiver les clics sur les cartes correspondantes
                 this.cardElements[firstIndex].style.pointerEvents = 'none';
                 this.cardElements[secondIndex].style.pointerEvents = 'none';
@@ -122,18 +120,10 @@ class Structure {
                     this.flippedIndices = [];
                 }, 1000); // Délai de 1 seconde
             }
-
         }
     }
 
     saveAttemptsToDatabase() {
-        // Log des données avant envoi
-        console.log('Début saveAttemptsToDatabase');
-        console.log('Données à envoyer:', {
-            attempts: this.attempts,
-            pairsCount: this.pairsCount
-        });
-
         fetch('/memory/saveAttempts.php', {
             method: 'POST',
             headers: {
@@ -145,36 +135,18 @@ class Structure {
             })
         })
             .then(response => {
-                // Log de la réponse brute
-                console.log('Réponse brute reçue:', response);
-                console.log('Status:', response.status);
-                console.log('Headers:', [...response.headers.entries()]);
-                
-                // Vérifier si la réponse est ok
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(data => {
-                // Log des données parsées
-                console.log('Données JSON reçues:', data);
-                if (data.status === 'success') {
-                    console.log('Succès:', data);
-                } else {
-                    console.error('Erreur côté serveur:', data.message);
+                if (data.status !== 'success') {
+                    throw new Error(data.message);
                 }
             })
             .catch(error => {
-                // Log détaillé des erreurs
-                console.error('Erreur détaillée:', {
-                    message: error.message,
-                    error: error,
-                    stack: error.stack
-                });
-            })
-            .finally(() => {
-                console.log('Fin saveAttemptsToDatabase');
+                // Silently handle errors
             });
     }
 
